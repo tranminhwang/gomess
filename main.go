@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/sirupsen/logrus"
 	"gomess/cmd"
+	"gomess/internal/api"
 	"os/signal"
 	"sync"
 	"syscall"
@@ -38,6 +39,7 @@ func main() {
 	go func() {
 		defer wg.Done()
 		// wait for API servers to shut down gracefully
+		api.WaitForCleanup(shutdownCtx)
 	}()
 
 	wg.Add(1)
